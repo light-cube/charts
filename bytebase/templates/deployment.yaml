@@ -59,7 +59,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /api/actuator/info
-              port: web
+              port: {{ $port }}
             initialDelaySeconds: 2
             periodSeconds: 2
           resources:
