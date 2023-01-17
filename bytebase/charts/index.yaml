@@ -3,15 +3,15 @@ entries:
   bytebase:
   - apiVersion: v2
     appVersion: 1.11.0
-    created: "2023-01-17T20:20:06.092468+08:00"
+    created: "2023-01-17T20:22:00.913436+08:00"
     description: Safe database schema change and version control for DevOps teams.
-    digest: 789fd18f110c888b89b50b2b3da7e4d7cd401297e318e70ba0d3cde7b3e91b6a
+    digest: 0195dce7c9448778b72e7a143a7f990b1d0b781d6784a26f70ed3f877ba5103f
     icon: https://raw.githubusercontent.com/bytebase/bytebase.com/main/assets/logo-full.svg
     name: bytebase
     sources:
     - https://github.com/bytebase/bytebase
     type: application
     urls:
-    - bytebase-0.1.0.tgz
-    version: 0.1.0
-generated: "2023-01-17T20:20:06.09069+08:00"
+    - bytebase-0.1.1.tgz
+    version: 0.1.1
+generated: "2023-01-17T20:22:00.912871+08:00"
