@@ -1,0 +1,99 @@
+{{- $external_url := index .Values.bytebase.option "external-url" -}}
+{{- $port := .Values.bytebase.option.port -}}
+{{- $pg := .Values.bytebase.option.pg -}}
+{{- $data := .Values.bytebase.option.data -}}
+{{- $version := .Values.bytebase.version -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bytebase.fullname" . }}
+  labels:
+    {{- include "bytebase.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "bytebase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "bytebase.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            [
+              "--data",
+              {{ $data | quote }},
+              "--port",
+              {{ $port | quote }},
+              "--external-url",
+              # helm parser cannot handle the dash in the value, so we need to quote it, so we use $external_url instead of $external-url.
+              {{ $external_url | quote }},
+              "--pg",
+              {{ $pg | quote }},
+            ]
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ $port }}
+            initialDelaySeconds: 300
+            periodSeconds: 300
+            timeoutSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /api/actuator/info
+              port: web
+            initialDelaySeconds: 2
+            periodSeconds: 2
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: data
+          emptyDir: {}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessMode }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
+        {{- with .Values.persistence.storageClass }}
+        storageClassName: {{ . }}
+        {{- end }}
+  {{- end }}
