@@ -5,11 +5,12 @@ metadata:
   labels:
     {{- include "bluesky-pds.labels" . | nindent 4 }}
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.pds.dataStorage.size }}
   {{- if ne .Values.pds.dataStorage.storageClass "" }}
   storageClassName: {{ .Values.pds.dataStorage.storageClass }}
   {{- end }}
+  volumeName: "{{ include "bluesky-pds.fullname" . }}-pv"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pds.dataStorage.size }}

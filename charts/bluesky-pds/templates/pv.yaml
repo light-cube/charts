@@ -5,10 +5,10 @@ metadata:
   labels:
     {{- include "bluesky-pds.labels" . | nindent 4 }}
 spec:
-    capacity:
-        storage: {{ .Values.pds.dataStorage.size }}
     accessModes:
         - ReadWriteMany
+    capacity:
+        storage: {{ .Values.pds.dataStorage.size }}
     {{- if ne .Values.pds.dataStorage.csiDriver "" }}
     csi:
       driver: {{ .Values.pds.dataStorage.csiDriver }}
