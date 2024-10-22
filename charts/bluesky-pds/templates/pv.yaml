@@ -1,0 +1,23 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: "{{ include "bluesky-pds.fullname" . }}-pv"
+  labels:
+    {{- include "bluesky-pds.labels" . | nindent 4 }}
+spec:
+    capacity:
+        storage: {{ .Values.pds.dataStorage.size }}
+    accessModes:
+        - ReadWriteMany
+    {{- if ne .Values.pds.dataStorage.csiDriver "" }}
+    csi:
+      driver: {{ .Values.pds.dataStorage.csiDriver }}
+      volumeHandle: {{ .Values.pds.dataStorage.volumeHandle }}
+      volumeAttributes:
+        {{- range $key, $value := .Values.pds.dataStorage.csiAttributes }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+    {{- end }}
+    {{- if ne .Values.pds.dataStorage.storageClass "" }}
+    storageClassName: {{ .Values.pds.dataStorage.storageClass }}
+    {{- end }}
