@@ -18,6 +18,4 @@ spec:
         {{ $key }}: {{ $value }}
         {{- end }}
     {{- end }}
-    {{- if ne .Values.pds.dataStorage.storageClass "" }}
     storageClassName: {{ .Values.pds.dataStorage.storageClass }}
-    {{- end }}
