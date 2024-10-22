@@ -85,7 +85,6 @@ Once this is done, you should be able to login on https://bsky.app/ using your P
 | pds.dataStorage.mountPath | string | `"/pds"` |  |
 | pds.dataStorage.size | string | `"10Gi"` |  |
 | pds.dataStorage.storageClass | string | `nil` |  |
-| pds.dataStorage.volumeHandle | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |

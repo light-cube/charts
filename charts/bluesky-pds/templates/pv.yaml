@@ -12,7 +12,7 @@ spec:
     {{- if ne .Values.pds.dataStorage.csiDriver "" }}
     csi:
       driver: {{ .Values.pds.dataStorage.csiDriver }}
-      volumeHandle: {{ .Values.pds.dataStorage.volumeHandle }}
+      volumeHandle: "{{ include "bluesky-pds.fullname" . }}-pv"
       volumeAttributes:
         {{- range $key, $value := .Values.pds.dataStorage.csiAttributes }}
         {{ $key }}: {{ $value }}

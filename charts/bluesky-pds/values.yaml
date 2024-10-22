@@ -35,7 +35,6 @@ pds:
     mountPath: "/pds"
     storageClass: null
     csiDriver: null
-    volumeHandle: null
     csiAttributes: {}
 
 imagePullSecrets: []
