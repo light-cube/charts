@@ -107,7 +107,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: "{{ include "bluesky-pds.fullname" . }}-data"
+            claimName: "{{ include "bluesky-pds.fullname" . }}-pvc"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
