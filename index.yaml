@@ -3,6 +3,16 @@ entries:
   bluesky-pds:
   - apiVersion: v2
     appVersion: 0.4.59
+    created: "2024-10-22T13:19:48.15028493Z"
+    description: A Helm chart to deploy a Bluesky PDS
+    digest: 0da09b58b793c69cf348b3581e4b6789e19931bdd4f98a79437798b57f253268
+    name: bluesky-pds
+    type: application
+    urls:
+    - https://github.com/light-cube/charts/releases/download/bluesky-pds-0.1.5/bluesky-pds-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.4.59
     created: "2024-10-22T13:10:34.914378834Z"
     description: A Helm chart to deploy a Bluesky PDS
     digest: 43e6a513e059e610643a9df2326178ff7b76d5f494f96c888d467df0bcc38705
@@ -45,4 +55,4 @@ entries:
     urls:
     - https://github.com/light-cube/charts/releases/download/bytebase-0.1.3/bytebase-0.1.3.tgz
     version: 0.1.3
-generated: "2024-10-22T13:10:34.914390786Z"
+generated: "2024-10-22T13:19:48.15030611Z"
