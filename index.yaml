@@ -68,6 +68,21 @@ entries:
   tencent-cloud-cls-log:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-04-12T10:21:58.650622924Z"
+    dependencies:
+    - name: crd
+      repository: file://charts/crd
+      version: 0.1.0
+    description: tencent cloud log service for kubernetes. Include controller and
+      loglistener daemonset
+    digest: 2ec6856f5d7858634909449ee84a4aad2b0c28535bf07122a6c2d7b9f1963e40
+    name: tencent-cloud-cls-log
+    type: application
+    urls:
+    - https://github.com/light-cube/charts/releases/download/tencent-cloud-cls-log-1.0.10/tencent-cloud-cls-log-1.0.10.tgz
+    version: 1.0.10
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-04-12T07:18:15.436327799Z"
     dependencies:
     - name: crd
@@ -96,4 +111,4 @@ entries:
     urls:
     - https://github.com/light-cube/charts/releases/download/tencent-cloud-cls-log-1.0.8/tencent-cloud-cls-log-1.0.8.tgz
     version: 1.0.8
-generated: "2025-04-12T07:18:15.43634958Z"
+generated: "2025-04-12T10:21:58.650646458Z"
