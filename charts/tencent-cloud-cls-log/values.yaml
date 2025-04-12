@@ -1,0 +1,64 @@
+# Default values for cls-loglistener.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ClusterID: ""
+Endpoint: "ap-guangzhou.cls.tencentcs.com"
+
+LoglistenerImage:
+  Repository: "ccr.ccs.tencentyun.com/tkeimages/loglistener"
+  Tag: "v2.9.9"
+ControllerImage:
+  Repository: "ccr.ccs.tencentyun.com/tkeimages/cls-provisioner"
+  Tag: "v1.1.16.1"
+LogAgentImage:
+  Repository: "ccr.ccs.tencentyun.com/tkeimages/log-agent"
+  Tag: "v1.1.16.1"
+vmagentImage:
+  Repository: "ccr.ccs.tencentyun.com/tkeimages/vmagent"
+  Tag: "v1.99.0-cls"
+
+SecretId: ""
+SecretKey: ""
+Master: ""
+Certificate:
+  Type: "configmap"
+  SessionToken: "tmp"
+  ExpiredTime: "2544317285"
+
+DockerRoot: "/var/lib/docker"
+
+clsProvisionerResources:
+  limits:
+    cpu: 100m
+    memory: 500M
+  requests:
+    cpu: 100m
+    memory: 64M
+vmagentResources:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 512m
+    memory: 512Mi
+
+logAgentResources:
+  limits:
+    cpu: 100m
+    memory: 500M
+  requests:
+    cpu: 10m
+    memory: 200M
+loglistenerResources:
+  limits:
+    cpu: 1
+    memory: 600M
+  requests:
+    cpu: 100m
+    memory: 16M
+
+CloudAPI: ""
+CloudAPIRegion: ""
+LocalRegion: ""
+label: ""

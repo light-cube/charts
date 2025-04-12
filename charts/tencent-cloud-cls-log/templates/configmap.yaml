@@ -1,0 +1,12 @@
+{{- if eq .Values.Certificate.Type "configmap" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cls-credential
+  namespace: {{ .Release.Namespace }}
+data:
+  ExpiredTime: "{{ .Values.Certificate.ExpiredTime }}"
+  SessionToken: "{{ .Values.Certificate.SessionToken }}"
+  TmpSecretId: "{{ .Values.SecretId }}"
+  TmpSecretKey: "{{ .Values.SecretKey }}"
+{{- end }}

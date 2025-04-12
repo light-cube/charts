@@ -1,0 +1,1107 @@
+{{- if semverCompare ">=1.16-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: apiextensions.k8s.io/v1
+{{- else }}
+apiVersion: apiextensions.k8s.io/v1beta1
+{{- end }}
+kind: CustomResourceDefinition
+metadata:
+  name: logconfigs.cls.cloud.tencent.com
+spec:
+  group: cls.cloud.tencent.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+{{- if semverCompare ">=1.16-0" .Capabilities.KubeVersion.GitVersion }}
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                clsDetail:
+                  type: object
+                  properties:
+                    advancedConfig:
+                      nullable: true
+                      type: object
+                      properties:
+                        ClsAgentFileTimeout:
+                          nullable: true
+                          type: integer
+                        ClsAgentMaxDepth:
+                          nullable: true
+                          type: integer
+                        ClsAgentParseFailMerge:
+                          nullable: true
+                          type: boolean
+                    logsetName:
+                      nullable: true
+                      type: string
+                    logsetId:
+                      nullable: true
+                      type: string
+                    topicName:
+                      nullable: true
+                      type: string
+                    topicId:
+                      nullable: true
+                      type: string
+                    logFormat:
+                      nullable: true
+                      type: string
+                    logType:
+                      nullable: true
+                      type: string
+                    userDefineRule:
+                      nullable: true
+                      type: string
+                    period:
+                      nullable: true
+                      type: integer
+                    hotPeriod:
+                      nullable: true
+                      type: integer
+                    partitionCount:
+                      nullable: true
+                      type: integer
+                    autoSplit:
+                      nullable: true
+                      type: string
+                    maxSplitPartitions:
+                      nullable: true
+                      type: integer
+                    storageType:
+                      nullable: true
+                      type: string
+                    excludePaths:
+                      nullable: true
+                      type: array
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          excludeType:
+                            nullable: true
+                            type: string
+                          value:
+                            nullable: true
+                            type: string
+                    fullTextIndex:
+                      nullable: true
+                      type: object
+                      properties:
+                        tokenizer:
+                          nullable: true
+                          type: string
+                        containZH:
+                          nullable: true
+                          type: boolean
+                        caseSensitive:
+                          nullable: true
+                          type: boolean
+                        status:
+                          nullable: true
+                          type: string
+                    tags:
+                      nullable: true
+                      type: array
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          key:
+                            nullable: true
+                            type: string
+                          value:
+                            nullable: true
+                            type: string
+                    indexStatus:
+                      nullable: true
+                      type: string
+                    autoIndex:
+                      nullable: true
+                      type: string
+                    indexs:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          indexName:
+                            nullable: true
+                            type: string
+                          indexType:
+                            nullable: true
+                            type: string
+                          tokenizer:
+                            nullable: true
+                            type: string
+                          containZH:
+                            nullable: true
+                            type: boolean
+                          sqlFlag:
+                            nullable: true
+                            type: boolean
+                    extractRule:
+                      nullable: true
+                      type: object
+                      properties:
+                        timeKey:
+                          nullable: true
+                          type: string
+                        timeFormat:
+                          nullable: true
+                          type: string
+                        delimiter:
+                          nullable: true
+                          type: string
+                        logRegex:
+                          nullable: true
+                          type: string
+                        beginningRegex:
+                          nullable: true
+                          type: string
+                        unMatchUpload:
+                          nullable: true
+                          type: string
+                        unMatchedKey:
+                          nullable: true
+                          type: string
+                        backtracking:
+                          nullable: true
+                          type: string
+                        isGBK:
+                          nullable: true
+                          type: string
+                        jsonStandard:
+                          nullable: true
+                          type: string
+                        rawLogKey:
+                          nullable: true
+                          type: string
+                        keys:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        filterKeys:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        filterRegex:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                inputDetail:
+                  nullable: true
+                  type: object
+                  properties:
+                    type:
+                      nullable: true
+                      type: string
+                      enum:
+                        - container_stdout
+                        - container_file
+                        - host_file
+                    containerStdout:
+                      nullable: true
+                      type: object
+                      properties:
+                        namespace:
+                          nullable: true
+                          type: string
+                        excludeNamespace:
+                          nullable: true
+                          type: string
+                        allContainers:
+                          nullable: true
+                          type: boolean
+                        customLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        includeLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        excludeLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        container:
+                          nullable: true
+                          type: string
+                        containerOperator:
+                          nullable: true
+                          type: string
+                        metadataLabels:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        metadataContainer:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        workloads:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: object
+                            properties:
+                              namespace:
+                                nullable: true
+                                type: string
+                              name:
+                                nullable: true
+                                type: string
+                              kind:
+                                nullable: true
+                                type: string
+                                enum:
+                                  - deployment
+                                  - daemonset
+                                  - statefulset
+                                  - job
+                                  - cronjob
+                              container:
+                                nullable: true
+                                type: string
+                              containerOperator:
+                                nullable: true
+                                type: string
+                    containerFile:
+                      nullable: true
+                      type: object
+                      properties:
+                        logPath:
+                          nullable: true
+                          type: string
+                        filePaths:
+                          nullable: true
+                          type: array
+                          items:
+                            nullable: true
+                            type: object
+                            properties:
+                              path:
+                                nullable: true
+                                type: string
+                              file:
+                                nullable: true
+                                type: string
+                        filePattern:
+                          nullable: true
+                          type: string
+                        namespace:
+                          nullable: true
+                          type: string
+                        excludeNamespace:
+                          nullable: true
+                          type: string
+                        container:
+                          nullable: true
+                          type: string
+                        containerOperator:
+                          nullable: true
+                          type: string
+                        customLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        includeLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        excludeLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+                        metadataLabels:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        metadataContainer:
+                          type: array
+                          nullable: true
+                          items:
+                            nullable: true
+                            type: string
+                        workload:
+                          nullable: true
+                          type: object
+                          properties:
+                            name:
+                              nullable: true
+                              type: string
+                            kind:
+                              nullable: true
+                              type: string
+                    hostFile:
+                      nullable: true
+                      type: object
+                      properties:
+                        logPath:
+                          nullable: true
+                          type: string
+                        filePaths:
+                          nullable: true
+                          type: array
+                          items:
+                            nullable: true
+                            type: object
+                            properties:
+                              path:
+                                nullable: true
+                                type: string
+                              file:
+                                nullable: true
+                                type: string
+                        filePattern:
+                          nullable: true
+                          type: string
+                        filePaths:
+                          nullable: true
+                          type: array
+                          items:
+                            nullable: true
+                            type: object
+                            properties:
+                              path:
+                                nullable: true
+                                type: string
+                              file:
+                                nullable: true
+                                type: string
+                        customLabels:
+                          nullable: true
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                            type: string
+            status:
+              type: object
+              properties:
+                status:
+                  nullable: true
+                  type: string
+                code:
+                  nullable: true
+                  type: string
+                reason:
+                  nullable: true
+                  type: string
+{{- else if semverCompare ">=1.13-0" .Capabilities.KubeVersion.GitVersion }}
+  validation:
+    openAPIV3Schema:
+      type: object
+      properties:
+        spec:
+          type: object
+          properties:
+            clsDetail:
+              nullable: true
+              type: object
+              properties:
+                advancedConfig:
+                  type: object
+                  properties:
+                    ClsAgentFileTimeout:
+                      type: integer
+                    ClsAgentMaxDepth:
+                      type: integer
+                    ClsAgentParseFailMerge:
+                      type: boolean
+                logsetName:
+                  nullable: true
+                  type: string
+                logsetId:
+                  nullable: true
+                  type: string
+                topicName:
+                  nullable: true
+                  type: string
+                topicId:
+                  nullable: true
+                  type: string
+                logFormat:
+                  nullable: true
+                  type: string
+                logType:
+                  nullable: true
+                  type: string
+                  enum:
+                    - minimalist_log
+                    - json_log
+                    - delimiter_log
+                    - multiline_log
+                    - fullregex_log
+                    - multiline_fullregex_log
+                userDefineRule:
+                  nullable: true
+                  type: string
+                period:
+                  nullable: true
+                  type: integer
+                hotPeriod:
+                  nullable: true
+                  type: integer
+                partitionCount:
+                  nullable: true
+                  type: integer
+                autoSplit:
+                  nullable: true
+                  type: string
+                maxSplitPartitions:
+                  nullable: true
+                  type: integer
+                storageType:
+                  nullable: true
+                  type: string
+                excludePaths:
+                  nullable: true
+                  type: array
+                  items:
+                    nullable: true
+                    type: object
+                    properties:
+                      excludeType:
+                        nullable: true
+                        type: string
+                      value:
+                        nullable: true
+                        type: string
+                fullTextIndex:
+                  nullable: true
+                  type: object
+                  properties:
+                    tokenizer:
+                      nullable: true
+                      type: string
+                    containZH:
+                      nullable: true
+                      type: boolean
+                    caseSensitive:
+                      nullable: true
+                      type: boolean
+                    status:
+                      nullable: true
+                      type: string
+                tags:
+                  nullable: true
+                  type: array
+                  items:
+                    nullable: true
+                    type: object
+                    properties:
+                      key:
+                        nullable: true
+                        type: string
+                      value:
+                        nullable: true
+                        type: string
+                indexStatus:
+                  nullable: true
+                  type: string
+                autoIndex:
+                  nullable: true
+                  type: string
+                indexs:
+                  type: array
+                  nullable: true
+                  items:
+                    nullable: true
+                    type: object
+                    properties:
+                      indexName:
+                        nullable: true
+                        type: string
+                      indexType:
+                        nullable: true
+                        type: string
+                      tokenizer:
+                        nullable: true
+                        type: string
+                      containZH:
+                        nullable: true
+                        type: boolean
+                      sqlFlag:
+                        nullable: true
+                        type: boolean
+                extractRule:
+                  nullable: true
+                  type: object
+                  properties:
+                    timeKey:
+                      nullable: true
+                      type: string
+                    timeFormat:
+                      nullable: true
+                      type: string
+                    delimiter:
+                      nullable: true
+                      type: string
+                    logRegex:
+                      nullable: true
+                      type: string
+                    beginningRegex:
+                      nullable: true
+                      type: string
+                    unMatchUpload:
+                      nullable: true
+                      type: string
+                    unMatchedKey:
+                      nullable: true
+                      type: string
+                    backtracking:
+                      nullable: true
+                      type: string
+                    isGBK:
+                      nullable: true
+                      type: string
+                    jsonStandard:
+                      nullable: true
+                      type: string
+                    rawLogKey:
+                      nullable: true
+                      type: string
+                    keys:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    filterKeys:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    filterRegex:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+            inputDetail:
+              nullable: true
+              type: object
+              properties:
+                type:
+                  nullable: true
+                  type: string
+                  enum:
+                    - container_stdout
+                    - container_file
+                    - host_file
+                containerStdout:
+                  nullable: true
+                  type: object
+                  properties:
+                    namespace:
+                      nullable: true
+                      type: string
+                    excludeNamespace:
+                      nullable: true
+                      type: string
+                    allContainers:
+                      nullable: true
+                      type: boolean
+                    includeLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    excludeLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    metadataLabels:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    metadataContainer:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    customLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    container:
+                      nullable: true
+                      type: string
+                    containerOperator:
+                      nullable: true
+                      type: string
+                    workloads:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          namespace:
+                            nullable: true
+                            type: string
+                          name:
+                            nullable: true
+                            type: string
+                          kind:
+                            nullable: true
+                            type: string
+                            enum:
+                              - deployment
+                              - daemonset
+                              - statefulset
+                              - job
+                              - cronjob
+                          container:
+                            nullable: true
+                            type: string
+                          containerOperator:
+                            nullable: true
+                            type: string
+                containerFile:
+                  nullable: true
+                  type: object
+                  properties:
+                    logPath:
+                      nullable: true
+                      type: string
+                    filePattern:
+                      nullable: true
+                      type: string
+                    filePaths:
+                      nullable: true
+                      type: array
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          path:
+                            nullable: true
+                            type: string
+                          file:
+                            nullable: true
+                            type: string
+                    namespace:
+                      nullable: true
+                      type: string
+                    excludeNamespace:
+                      nullable: true
+                      type: string
+                    container:
+                      nullable: true
+                      type: string
+                    containerOperator:
+                      nullable: true
+                      type: string
+                    includeLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    excludeLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    metadataLabels:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    metadataContainer:
+                      type: array
+                      nullable: true
+                      items:
+                        nullable: true
+                        type: string
+                    customLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+                    workload:
+                      nullable: true
+                      type: object
+                      properties:
+                        name:
+                          nullable: true
+                          type: string
+                        kind:
+                          nullable: true
+                          type: string
+                hostFile:
+                  nullable: true
+                  type: object
+                  properties:
+                    logPath:
+                      nullable: true
+                      type: string
+                    filePattern:
+                      nullable: true
+                      type: string
+                    filePaths:
+                      nullable: true
+                      type: array
+                      items:
+                        nullable: true
+                        type: object
+                        properties:
+                          path:
+                            nullable: true
+                            type: string
+                          file:
+                            nullable: true
+                            type: string
+                    customLabels:
+                      nullable: true
+                      type: object
+                      additionalProperties:
+                        nullable: true
+                        type: string
+        status:
+          type: object
+          nullable: true
+          properties:
+            status:
+              nullable: true
+              type: string
+            code:
+              nullable: true
+              type: string
+            reason:
+              nullable: true
+              type: string
+{{- else if semverCompare ">=1.12-0" .Capabilities.KubeVersion.GitVersion }}
+  validation:
+    openAPIV3Schema:
+      type: object
+      properties:
+        spec:
+          type: object
+          properties:
+            clsDetail:
+              type: object
+              properties:
+                advancedConfig:
+                  type: object
+                  properties:
+                    ClsAgentFileTimeout:
+                      type: integer
+                    ClsAgentMaxDepth:
+                      type: integer
+                    ClsAgentParseFailMerge:
+                      type: boolean
+                logsetName:
+                  type: string
+                logsetId:
+                  type: string
+                topicName:
+                  type: string
+                topicId:
+                  type: string
+                logFormat:
+                  type: string
+                logType:
+                  type: string
+                  enum:
+                    - minimalist_log
+                    - json_log
+                    - delimiter_log
+                    - multiline_log
+                    - fullregex_log
+                    - multiline_fullregex_log
+                userDefineRule:
+                  type: string
+                period:
+                  type: integer
+                hotPeriod:
+                  type: integer
+                hotPeriod:
+                  type: integer
+                partitionCount:
+                  type: integer
+                autoSplit:
+                  type: string
+                maxSplitPartitions:
+                  type: integer
+                storageType:
+                  type: string
+                excludePaths:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      excludeType:
+                        type: string
+                      value:
+                        type: string
+                fullTextIndex:
+                  type: object
+                  properties:
+                    tokenizer:
+                      type: string
+                    containZH:
+                      type: boolean
+                    caseSensitive:
+                      type: boolean
+                    status:
+                      type: string
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+                indexStatus:
+                  type: string
+                autoIndex:
+                  type: string
+                indexs:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      indexName:
+                        type: string
+                      indexType:
+                        type: string
+                      tokenizer:
+                        type: string
+                      containZH:
+                        type: boolean
+                      sqlFlag:
+                        type: boolean
+                extractRule:
+                  type: object
+                  properties:
+                    timeKey:
+                      type: string
+                    timeFormat:
+                      type: string
+                    delimiter:
+                      type: string
+                    logRegex:
+                      type: string
+                    beginningRegex:
+                      type: string
+                    unMatchUpload:
+                      type: string
+                    unMatchedKey:
+                      type: string
+                    backtracking:
+                      type: string
+                    isGBK:
+                      type: string
+                    jsonStandard:
+                      type: string
+                    rawLogKey:
+                      type: string
+                    keys:
+                      type: array
+                      items:
+                        type: string
+                    filterKeys:
+                      type: array
+                      items:
+                        type: string
+                    filterRegex:
+                      type: array
+                      items:
+                        type: string
+            inputDetail:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - container_stdout
+                    - container_file
+                    - host_file
+                containerStdout:
+                  type: object
+                  properties:
+                    namespace:
+                      type: string
+                    excludeNamespace:
+                      type: string
+                    allContainers:
+                      type: boolean
+                    includeLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    excludeLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    metadataLabels:
+                      type: array
+                      items:
+                        type: string
+                    metadataContainer:
+                      type: array
+                      items:
+                        type: string
+                    customLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    container:
+                      type: string
+                    containerOperator:
+                      type: string
+                    workloads:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          namespace:
+                            type: string
+                          name:
+                            type: string
+                          kind:
+                            type: string
+                            enum:
+                              - deployment
+                              - daemonset
+                              - statefulset
+                              - job
+                              - cronjob
+                          container:
+                            type: string
+                          containerOperator:
+                            type: string
+                containerFile:
+                  type: object
+                  properties:
+                    logPath:
+                      type: string
+                    filePattern:
+                      type: string
+                    filePaths:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: string
+                          file:
+                            type: string
+                    namespace:
+                      type: string
+                    excludeNamespace:
+                      type: string
+                    container:
+                      type: string
+                    containerOperator:
+                      type: string
+                    includeLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    excludeLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    metadataLabels:
+                      type: array
+                      items:
+                        type: string
+                    metadataContainer:
+                      type: array
+                      items:
+                        type: string
+                    customLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    workload:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        kind:
+                          type: string
+                hostFile:
+                  type: object
+                  properties:
+                    logPath:
+                      type: string
+                    filePattern:
+                      type: string
+                        filePaths:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              path:
+                                type: string
+                              file:
+                                type: string
+                    customLabels:
+                      type: object
+                      additionalProperties:
+                        type: string
+        status:
+          type: object
+          properties:
+            status:
+              type: string
+            code:
+              type: string
+            reason:
+              type: string
+{{- end }}
+  scope: Cluster
+  names:
+    plural: logconfigs
+    singular: logconfig
+    kind: LogConfig
+    shortNames:
+      - lc

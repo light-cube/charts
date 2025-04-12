@@ -1,0 +1,513 @@
+{{- if semverCompare ">=1.16-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: apiextensions.k8s.io/v1
+{{- else }}
+apiVersion: apiextensions.k8s.io/v1beta1
+{{- end }}
+kind: CustomResourceDefinition
+metadata:
+  name: metricconfigs.metrics.cls.tencent.com
+spec:
+  group: metrics.cls.tencent.com
+  names:
+    categories:
+    - cls-metric-operator
+    kind: MetricConfig
+    listKind: MetricConfigList
+    plural: metricconfigs
+    shortNames:
+    - mccs
+    singular: metricconfigs
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              cls_detail:
+                properties:
+                  auto_split:
+                    nullable: true
+                    type: boolean
+                  logset_id:
+                    nullable: true
+                    type: string
+                  logset_name:
+                    nullable: true
+                    type: string
+                  max_split_partitions:
+                    nullable: true
+                    type: integer
+                  period:
+                    format: uint64
+                    nullable: true
+                    type: integer
+                  tags:
+                    items:
+                      nullable: true
+                      properties:
+                        key:
+                          nullable: true
+                          type: string
+                        value:
+                          nullable: true
+                          type: string
+                      type: object
+                    type: array
+                  topic_id:
+                    type: string
+                  topic_name:
+                    nullable: true
+                    type: string
+                type: object
+              cls_process:
+                properties:
+                  honor_labels:
+                    type: boolean
+                    nullable: true
+                  scheme:
+                    enum:
+                    - http
+                    - https
+                    type: string
+                    nullable: true
+                  scrape_interval:
+                    nullable: true
+                    pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+                    type: string
+                  scrape_timeout:
+                    nullable: true
+                    pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+                    type: string
+                  metric_relabel_configs:
+                    items:
+                      nullable: true
+                      type: object
+                      properties:
+                        action:
+                          enum:
+                          - replace
+                          - keep
+                          - drop
+                          - hashmod
+                          - labelmap
+                          - labeldrop
+                          - labelkeep
+                          - lowercase
+                          - uppercase
+                          - keepequal
+                          - dropequal
+                          type: string
+                        modulus:
+                          format: uint64
+                          nullable: true
+                          type: integer
+                        regex:
+                          nullable: true
+                          type: string
+                        replacement:
+                          nullable: true
+                          type: string
+                        separator:
+                          nullable: true
+                          type: string
+                        source_labels:
+                          items:
+                            type: string
+                          nullable: true
+                          type: array
+                        target_label:
+                          nullable: true
+                          type: string
+                    nullable: true
+                    type: array
+                  relabel_configs:
+                    items:
+                      nullable: true
+                      type: object
+                      properties:
+                        action:
+                          enum:
+                          - replace
+                          - keep
+                          - drop
+                          - hashmod
+                          - labelmap
+                          - labeldrop
+                          - labelkeep
+                          - lowercase
+                          - uppercase
+                          - keepequal
+                          - dropequal
+                          type: string
+                        modulus:
+                          format: uint64
+                          nullable: true
+                          type: integer
+                        regex:
+                          nullable: true
+                          type: string
+                        replacement:
+                          nullable: true
+                          type: string
+                        separator:
+                          nullable: true
+                          type: string
+                        source_labels:
+                          items:
+                            type: string
+                          nullable: true
+                          type: array
+                        target_label:
+                          nullable: true
+                          type: string
+                    nullable: true
+                    type: array 
+                  external_labels:
+                    items:
+                      nullable: true
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    nullable: true
+                    type: array
+                  metadatas:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  select_label:
+                    nullable: true
+                    properties:
+                      keys:
+                        items:
+                          type: string
+                        nullable: true
+                        type: array
+                      select_type:
+                        nullable: true
+                        type: string
+                    type: object
+                type: object
+              scrape_configs:
+                type: array
+                items:
+                  nullable: true
+                  type: object
+                  properties:
+                    authorization:
+                      nullable: true
+                      properties:
+                        credentials:
+                          nullable: true
+                          type: string
+                        credentials_file:
+                          nullable: true
+                          type: string
+                        credentials_ref:
+                          nullable: true
+                          type: string
+                        type:
+                          nullable: true
+                          type: string
+                      type: object
+                    basic_auth:
+                      nullable: true
+                      properties:
+                        password:
+                          nullable: true
+                          type: string
+                        password_file:
+                          nullable: true
+                          type: string
+                        password_ref:
+                          nullable: true
+                          type: string
+                        username:
+                          nullable: true
+                          type: string
+                        username_file:
+                          nullable: true
+                          type: string
+                        username_ref:
+                          nullable: true
+                          type: string
+                      type: object
+                    bearer_token:
+                      nullable: true
+                      type: string
+                    bearer_token_file:
+                      nullable: true
+                      type: string
+                    enable_compression:
+                      nullable: true
+                      type: boolean
+                    follow_redirects:
+                      nullable: true
+                      type: boolean
+                    job_name:
+                      nullable: true
+                      type: string
+                    honor_timestamps:
+                      nullable: true
+                      type: boolean
+                    http_headers:
+                      additionalProperties:
+                        properties:
+                          files:
+                            items:
+                              type: string
+                            nullable: true
+                            type: array
+                          secrets:
+                            items:
+                              type: string
+                            nullable: true
+                            type: array
+                          values:
+                            items:
+                              type: string
+                            nullable: true
+                            type: array
+                        type: object
+                      type: object
+                    kubernetes_sd_configs:
+                      items:
+                        nullable: true
+                        properties:
+                          api_server:
+                            nullable: true
+                            type: string
+                          attach_metadata:
+                            nullable: true
+                            properties:
+                              node:
+                                nullable: true
+                                type: boolean
+                            type: object
+                          kubeconfig_file:
+                            nullable: true
+                            type: string
+                          namespaces:
+                            nullable: true
+                            properties:
+                              names:
+                                items:
+                                  type: string
+                                nullable: true
+                                type: array
+                              own_namespace:
+                                nullable: true
+                                type: boolean
+                            type: object
+                          role:
+                            type: string
+                          selectors:
+                            items:
+                              nullable: true
+                              properties:
+                                field:
+                                  nullable: true
+                                  type: string
+                                label:
+                                  nullable: true
+                                  type: string
+                                role:
+                                  nullable: true
+                                  type: string
+                              type: object
+                            nullable: true
+                            type: array
+                        type: object
+                      nullable: true
+                      type: array
+                    metrics_path:
+                      nullable: true
+                      type: string
+                    no_proxy:
+                      nullable: true
+                      type: string
+                    oauth2:
+                      nullable: true
+                      properties:
+                        client_id:
+                          nullable: true
+                          type: string
+                        client_secret:
+                          nullable: true
+                          type: string
+                        client_secret_file:
+                          nullable: true
+                          type: string
+                        client_secret_ref:
+                          nullable: true
+                          type: string
+                        endpoint_params:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        scopes:
+                          items:
+                            type: string
+                          nullable: true
+                          type: array
+                        tls_config:
+                          nullable: true
+                          properties:
+                            ca:
+                              nullable: true
+                              type: string
+                            ca_file:
+                              nullable: true
+                              type: string
+                            cert:
+                              nullable: true
+                              type: string
+                            cert_file:
+                              nullable: true
+                              type: string
+                            insecure_skip_verify:
+                              nullable: true
+                              type: boolean
+                            key:
+                              nullable: true
+                              type: string
+                            key_file:
+                              nullable: true
+                              type: string
+                            max_version:
+                              format: uint16
+                              nullable: true
+                              type: integer
+                            min_version:
+                              format: uint16
+                              nullable: true
+                              type: integer
+                            server_name:
+                              nullable: true
+                              type: string
+                          type: object
+                        token_url:
+                          nullable: true
+                          type: string
+                      type: object
+                    params:
+                      additionalProperties:
+                        items:
+                          type: string
+                        type: array
+                      type: object
+                    port:
+                      nullable: true
+                      type: string
+                    proxy_connect_header:
+                      additionalProperties:
+                        items:
+                          type: string
+                        type: array
+                      nullable: true
+                      type: object
+                    proxy_from_environment:
+                      nullable: true
+                      type: boolean
+                    proxy_url:
+                      nullable: true
+                      pattern: ^http(s)://.+$
+                      type: string
+                    sample_limit:
+                      nullable: true
+                      type: integer
+                    scheme:
+                      enum:
+                      - http
+                      - https
+                      type: string
+                    scrape_interval:
+                      nullable: true
+                      pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+                      type: string
+                    scrape_protocols:
+                      items:
+                        type: string
+                      type: array
+                    scrape_timeout:
+                      nullable: true
+                      pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+                      type: string
+                    static_configs:
+                      items:
+                        nullable: true
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          targets:
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      nullable: true
+                      type: array
+                    tls_config:
+                      nullable: true
+                      properties:
+                        ca:
+                          nullable: true
+                          type: string
+                        ca_file:
+                          nullable: true
+                          type: string
+                        cert:
+                          nullable: true
+                          type: string
+                        cert_file:
+                          nullable: true
+                          type: string
+                        insecure_skip_verify:
+                          nullable: true
+                          type: boolean
+                        key:
+                          nullable: true
+                          type: string
+                        key_file:
+                          nullable: true
+                          type: string
+                        max_version:
+                          format: uint16
+                          nullable: true
+                          type: integer
+                        min_version:
+                          format: uint16
+                          nullable: true
+                          type: integer
+                        server_name:
+                          nullable: true
+                          type: string
+                      type: object
+            type: object
+          status:
+            properties:
+              code:
+                nullable: true
+                type: string
+              reason:
+                nullable: true
+                type: string
+              status:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
