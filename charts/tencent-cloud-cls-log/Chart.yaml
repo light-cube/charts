@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: 1.16.0
 dependencies:
 - name: crd
-  repository: file://chart/crd
+  repository: file://charts/crd
   version: 0.1.0
 description: tencent cloud log service for kubernetes. Include controller and loglistener
   daemonset
