@@ -386,19 +386,6 @@ spec:
                         filePattern:
                           nullable: true
                           type: string
-                        filePaths:
-                          nullable: true
-                          type: array
-                          items:
-                            nullable: true
-                            type: object
-                            properties:
-                              path:
-                                nullable: true
-                                type: string
-                              file:
-                                nullable: true
-                                type: string
                         customLabels:
                           nullable: true
                           type: object
