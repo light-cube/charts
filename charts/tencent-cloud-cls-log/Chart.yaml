@@ -8,4 +8,4 @@ description: tencent cloud log service for kubernetes. Include controller and lo
   daemonset
 name: tencent-cloud-cls-log
 type: application
-version: 1.0.9
+version: 1.0.10

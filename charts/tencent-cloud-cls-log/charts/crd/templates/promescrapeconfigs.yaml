@@ -75,9 +75,6 @@ spec:
                     enable_compression:
                       type: boolean
                       nullable: true
-                    proxy_url:
-                      type: string
-                      nullable: true
                     scrape_protocols:
                       type: array
                       items:
