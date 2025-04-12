@@ -65,4 +65,20 @@ entries:
     urls:
     - https://github.com/light-cube/charts/releases/download/bytebase-0.1.3/bytebase-0.1.3.tgz
     version: 0.1.3
-generated: "2024-10-22T13:38:43.477041322Z"
+  tencent-cloud-cls-log:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-04-12T06:39:07.617127652Z"
+    dependencies:
+    - name: crd
+      repository: file://charts/crd
+      version: 0.1.0
+    description: tencent cloud log service for kubernetes. Include controller and
+      loglistener daemonset
+    digest: 47a3a9c4dbee336ab2d9b1a31b14cb9221151959c8bb6bb4fc2e96a8bc23e551
+    name: tencent-cloud-cls-log
+    type: application
+    urls:
+    - https://github.com/light-cube/charts/releases/download/tencent-cloud-cls-log-1.0.8/tencent-cloud-cls-log-1.0.8.tgz
+    version: 1.0.8
+generated: "2025-04-12T06:39:07.617146306Z"
